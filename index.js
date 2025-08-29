@@ -2,7 +2,7 @@ import express from "express";
 import { MongoKerberosError } from "mongodb";
 import mongoose from "mongoose";
 import userRoutes from "./routes/userRoute.js";
-// import cors from "cors";
+import cors from "cors";
 // import 'dotenv/config'; // Automatically loads environment variables from .env file
 // require("dotenv").config();
 
@@ -13,11 +13,17 @@ const PORT = process.env.PORT || 6000;
 const app = express();
 
 // Middleware
+app.use(cors({  
+  origin: 'http://localhost:5173', // your frontend origin
+  credentials: true
+}));
+
 //to get request parameters 
 app.use(express.json());
 
 //to get the body parameters 
 app.use(express.urlencoded({ extended: true }));
+
 
 //middleware for grabbing details of each request made-
 app.use((req, res, next) => {
